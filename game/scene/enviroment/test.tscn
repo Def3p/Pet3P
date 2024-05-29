@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4no0n4g5h8rr"]
+
+[ext_resource type="Shader" path="res://shader/dashed_grid/dashed_grid.gdshader" id="1_ad32a"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6w3xl"]
+sky_top_color = Color(1, 1, 1, 1)
+sky_horizon_color = Color(0.794118, 0.789216, 0.794118, 1)
+ground_bottom_color = Color(0.176471, 0.156863, 0.176471, 1)
+ground_horizon_color = Color(0.794118, 0.789216, 0.794118, 1)
+
+[sub_resource type="Sky" id="Sky_mix6m"]
+sky_material = SubResource("ProceduralSkyMaterial_6w3xl")
+
+[sub_resource type="Environment" id="Environment_wu41k"]
+background_mode = 2
+sky = SubResource("Sky_mix6m")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fxffg"]
+render_priority = 0
+shader = ExtResource("1_ad32a")
+shader_parameter/subdivisions = 32.0
+shader_parameter/grid_width = 0.02
+shader_parameter/background_color = Color(0.2, 0.2, 0.2, 1)
+shader_parameter/background_color_two = Color(0.1, 0.1, 0.1, 1)
+shader_parameter/grid_color = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/dashed_scale_x = 0.02
+shader_parameter/dashed_scale_y = 0.02
+shader_parameter/dashed_count_x = 1.0
+shader_parameter/dashed_count_y = 1.0
+shader_parameter/point_width = 0.021
+shader_parameter/point_color = Color(0, 0, 0, 1)
+shader_parameter/point_scale_x = 0.05
+shader_parameter/point_scale_y = 0.05
+shader_parameter/inside_width = 0.01
+shader_parameter/inside_subdivisions = 6.0
+shader_parameter/inside_color = Color(0.4, 0.4, 0.4, 1)
+shader_parameter/in_dashed_scale_x = 0.3
+shader_parameter/in_dashed_scale_y = 0.3
+shader_parameter/in_dashed_count_x = 6.0
+shader_parameter/in_dashed_count_y = 6.0
+
+[node name="Test" type="Node3D"]
+
+[node name="Enviroment" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Enviroment"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Enviroment"]
+environment = SubResource("Environment_wu41k")
+
+[node name="Location" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGBox3D" parent="Location"]
+use_collision = true
+collision_mask = 0
+size = Vector3(20, 0.2, 20)
+material = SubResource("ShaderMaterial_fxffg")
