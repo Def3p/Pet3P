@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4no0n4g5h8rr"]
+[gd_scene load_steps=7 format=3 uid="uid://c4no0n4g5h8rr"]
 
 [ext_resource type="Shader" path="res://shader/dashed_grid/dashed_grid.gdshader" id="1_ad32a"]
+[ext_resource type="PackedScene" uid="uid://dnmnouo7t8spr" path="res://scene/character/player/player.tscn" id="2_qcusl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6w3xl"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -59,3 +60,6 @@ use_collision = true
 collision_mask = 0
 size = Vector3(20, 0.2, 20)
 material = SubResource("ShaderMaterial_fxffg")
+
+[node name="Player" parent="." instance=ExtResource("2_qcusl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22617, 0.0999997, -0.160493)
