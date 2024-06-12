@@ -63,3 +63,5 @@ material = SubResource("ShaderMaterial_fxffg")
 
 [node name="Player" parent="." instance=ExtResource("2_qcusl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22617, 0.0999997, -0.160493)
+
+[editable path="Player"]

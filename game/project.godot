@@ -20,6 +20,7 @@ AppConfig="*res://addons/maaacks_menus_template/base/scenes/Autoloads/AppConfig.
 SceneLoader="*res://addons/maaacks_menus_template/base/scenes/Autoloads/SceneLoader.tscn"
 ProjectMusicController="*res://addons/maaacks_menus_template/base/scenes/Autoloads/ProjectMusicController.tscn"
 ProjectUISoundController="*res://addons/maaacks_menus_template/base/scenes/Autoloads/ProjectUISoundController.tscn"
+PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 
 [editor_plugins]
 
