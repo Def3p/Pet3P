@@ -2,13 +2,17 @@ extends State
 class_name PlayerFallState
 
 @export var player: PlayerMain
+@export var camera: Camera3D
 
 var lerp_speed: float = 25.0
 var direction = Vector3.ZERO
+var camera_side: int = 0
 
 func Enter(): pass
 
 func Update(delta: float):
+	camera_side = Input.get_axis("right", "left")
+	camera.rotation.z = lerp(camera.rotation.z, deg_to_rad(2.5 * camera_side) , 5 * delta)
 	if player.is_on_floor(): state_transition.emit(self, "IdleState")
 
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")

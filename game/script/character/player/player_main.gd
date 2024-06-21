@@ -14,7 +14,7 @@ var gravity_percentage: float = 1
 
 @onready var camera = $Head/Camera3D
 @onready var fsm_node = $FiniteStateMachine
-@onready var move_state = $FiniteStateMachine/MoveState
+@onready var shake_animator = $CameraShakeAnimator
 @onready var head_node = $Head
 
 func _ready(): 
@@ -41,13 +41,13 @@ func move_condition(delta):
 
 	if Input.is_action_pressed("crouch"): 
 		current_speed = crouching_speed
-		move_state.animator.speed_scale = 0.8
+		shake_animator.speed_scale = 0.8
 	elif Input.is_action_pressed("sprint"): 
 		current_speed = sprinting_speed
-		move_state.animator.speed_scale = 1.4
+		shake_animator.speed_scale = 1.4
 	else: 
 		current_speed = walking_speed
-		move_state.animator.speed_scale = 1.0
+		shake_animator.speed_scale = 1.0
 
 func falling_condition(delta):
 	if fsm_node.current_state.name == "FallState": 
