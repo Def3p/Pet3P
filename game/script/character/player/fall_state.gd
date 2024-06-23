@@ -12,7 +12,7 @@ func Enter(): pass
 
 func Update(delta: float):
 	camera_side = Input.get_axis("right", "left")
-	camera.rotation.z = lerp(camera.rotation.z, deg_to_rad(2.5 * camera_side) , 5 * delta)
+	camera.rotation.z = lerp(camera.rotation.z, deg_to_rad(1.5 * camera_side) , 5 * delta)
 	if player.is_on_floor(): state_transition.emit(self, "IdleState")
 
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")
@@ -22,3 +22,5 @@ func Update(delta: float):
 	if to_direction:
 		player.velocity.x = direction.x * player.current_speed * delta
 		player.velocity.z = direction.z * player.current_speed * delta
+		if player.is_on_floor(): state_transition.emit(self, "MoveState")
+	else: if player.is_on_floor(): state_transition.emit(self, "IdleState")

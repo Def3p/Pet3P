@@ -14,13 +14,6 @@ config/name="Pet3p"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
-
-AppConfig="*res://addons/maaacks_menus_template/base/scenes/Autoloads/AppConfig.tscn"
-SceneLoader="*res://addons/maaacks_menus_template/base/scenes/Autoloads/SceneLoader.tscn"
-ProjectMusicController="*res://addons/maaacks_menus_template/base/scenes/Autoloads/ProjectMusicController.tscn"
-ProjectUISoundController="*res://addons/maaacks_menus_template/base/scenes/Autoloads/ProjectUISoundController.tscn"
-
 [display]
 
 window/size/mode=3

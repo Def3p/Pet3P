@@ -35,10 +35,6 @@ func _physics_process(delta):
 	move_and_slide()
 
 func move_condition(delta):
-	if fsm_node.current_state.name == "FallState":
-		current_speed = lerp(current_speed, current_speed * 0.6, 1.0 * delta)
-		return
-
 	if Input.is_action_pressed("crouch"): 
 		current_speed = crouching_speed
 		shake_animator.speed_scale = 0.8
