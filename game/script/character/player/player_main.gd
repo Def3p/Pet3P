@@ -34,7 +34,7 @@ func _physics_process(delta):
 	move_condition(delta)
 	move_and_slide()
 
-func move_condition(delta):
+func move_condition(_delta):
 	if Input.is_action_pressed("crouch"): 
 		current_speed = crouching_speed
 		shake_animator.speed_scale = 0.8
@@ -50,5 +50,4 @@ func falling_condition(delta):
 		camera.fov = lerp(camera.fov, 79.5, delta)
 	elif fsm_node.current_state.name == "MoveState" and Input.is_action_pressed("sprint"):
 		camera.fov = lerp(camera.fov, 84.0, delta)
-	else: 
-		camera.fov = lerp(camera.fov, 75.0, delta * 1.5)
+	else: camera.fov = lerp(camera.fov, 75.0, delta * 1.5)

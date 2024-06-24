@@ -77,10 +77,6 @@ jump={
 3d_physics/layer_1="Enviroment"
 3d_physics/layer_2="Player"
 
-[maaacks_menus_template]
-
-disable_plugin_dialogues=true
-
 [physics]
 
 3d/default_gravity=10.0

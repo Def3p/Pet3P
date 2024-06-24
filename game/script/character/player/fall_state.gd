@@ -11,7 +11,7 @@ var camera_side: int = 0
 func Enter(): pass
 
 func Update(delta: float):
-	camera_side = Input.get_axis("right", "left")
+	camera_side = int(Input.get_axis("right", "left"))
 	camera.rotation.z = lerp(camera.rotation.z, deg_to_rad(1.5 * camera_side) , 5 * delta)
 	if player.is_on_floor(): state_transition.emit(self, "IdleState")
 
