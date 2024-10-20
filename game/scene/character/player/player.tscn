@@ -1,11 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://dnmnouo7t8spr"]
+[gd_scene load_steps=16 format=3 uid="uid://dnmnouo7t8spr"]
 
 [ext_resource type="Script" path="res://script/character/player/player_main.gd" id="1_20ppy"]
+[ext_resource type="PackedScene" uid="uid://k6nbwxkmimdd" path="res://scene/character/player/weapon_manager.tscn" id="2_2omww"]
 [ext_resource type="Script" path="res://script/finite_state_machine.gd" id="2_4c1r2"]
 [ext_resource type="Script" path="res://script/character/player/idle_state.gd" id="3_t8ura"]
 [ext_resource type="Script" path="res://script/character/player/move_state.gd" id="4_65qnv"]
 [ext_resource type="Script" path="res://script/character/player/jump_state.gd" id="5_8eax6"]
 [ext_resource type="Script" path="res://script/character/player/fall_state.gd" id="6_h1x3b"]
+[ext_resource type="Script" path="res://script/component/hitbox_component.gd" id="7_qvr74"]
+[ext_resource type="Script" path="res://script/component/health_component.gd" id="8_v8fai"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_cb2ke"]
 
@@ -108,6 +111,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
 
+[node name="WeaponManager" parent="Head/Camera3D" instance=ExtResource("2_2omww")]
+
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_4c1r2")
 initial_state = NodePath("IdleState")
@@ -140,3 +145,34 @@ libraries = {
 }
 playback_default_blend_time = 2.0
 speed_scale = 0.35
+
+[node name="HitboxComponent" type="Area3D" parent="." node_paths=PackedStringArray("health_component")]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("7_qvr74")
+health_component = NodePath("../HealthComponent")
+
+[node name="Collision" type="CollisionShape3D" parent="HitboxComponent"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 1, 0)
+shape = SubResource("ConvexPolygonShape3D_17nu4")
+
+[node name="HealthComponent" type="Node3D" parent="."]
+script = ExtResource("8_v8fai")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.352
+anchor_bottom = 0.106
+offset_right = -0.504028
+offset_bottom = 0.311996
+
+[connection signal="death" from="HealthComponent" to="." method="_on_health_component_death"]

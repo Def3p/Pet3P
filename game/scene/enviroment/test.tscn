@@ -1,31 +1,21 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4no0n4g5h8rr"]
+[gd_scene load_steps=13 format=3 uid="uid://c4no0n4g5h8rr"]
 
+[ext_resource type="Texture2D" uid="uid://cw23up1fk4n7n" path="res://art/sky_texture/8k_stars_milky_way.jpg" id="1_5ef3d"]
 [ext_resource type="Shader" path="res://shader/dashed_grid/dashed_grid.gdshader" id="1_ad32a"]
-[ext_resource type="Texture2D" uid="uid://cw23up1fk4n7n" path="res://art/sky_texture/8k_stars_milky_way.jpg" id="1_jg3k2"]
 [ext_resource type="PackedScene" uid="uid://dnmnouo7t8spr" path="res://scene/character/player/player.tscn" id="2_qcusl"]
+[ext_resource type="PackedScene" uid="uid://xny6qcobck46" path="res://model/chicken/chicken.gltf" id="3_rvq1f"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vh3y3"]
-panorama = ExtResource("1_jg3k2")
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_bt8vo"]
+panorama = ExtResource("1_5ef3d")
 
-[sub_resource type="Sky" id="Sky_8bwfw"]
-sky_material = SubResource("PanoramaSkyMaterial_vh3y3")
+[sub_resource type="Sky" id="Sky_22blh"]
+sky_material = SubResource("PanoramaSkyMaterial_bt8vo")
 
-[sub_resource type="Environment" id="Environment_aisho"]
+[sub_resource type="Environment" id="Environment_kk6yt"]
 background_mode = 2
-background_energy_multiplier = 0.5
-sky = SubResource("Sky_8bwfw")
-tonemap_exposure = 0.8
-ssao_enabled = true
-ssil_enabled = true
-ssil_intensity = 0.0
-ssil_sharpness = 0.5
-fog_enabled = true
-fog_aerial_perspective = 0.9
-fog_sky_affect = 0.0
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.005
-volumetric_fog_sky_affect = 0.34
-adjustment_enabled = true
+sky = SubResource("Sky_22blh")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fxffg"]
 render_priority = 0
@@ -51,6 +41,9 @@ shader_parameter/in_dashed_scale_y = 0.3
 shader_parameter/in_dashed_count_x = 6.0
 shader_parameter/in_dashed_count_y = 6.0
 
+[sub_resource type="BoxOccluder3D" id="BoxOccluder3D_4ayn3"]
+size = Vector3(20.0271, 0.648165, 20.0363)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pdt6i"]
 render_priority = 0
 shader = ExtResource("1_ad32a")
@@ -75,7 +68,10 @@ shader_parameter/in_dashed_scale_y = 0.3
 shader_parameter/in_dashed_count_x = 6.0
 shader_parameter/in_dashed_count_y = 6.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_64lbl"]
+[sub_resource type="BoxOccluder3D" id="BoxOccluder3D_0uxjs"]
+size = Vector3(2.05049, 2.20109, 2.10769)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0q7s3"]
 viewport_path = NodePath("SubViewport")
 
 [node name="Test" type="Node3D"]
@@ -83,11 +79,14 @@ viewport_path = NodePath("SubViewport")
 [node name="Enviroment" type="Node3D" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Enviroment"]
-transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_energy = 1.2
 shadow_enabled = true
+shadow_normal_bias = 5.0
+shadow_opacity = 0.75
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Enviroment"]
-environment = SubResource("Environment_aisho")
+environment = SubResource("Environment_kk6yt")
 
 [node name="Location" type="Node3D" parent="."]
 
@@ -97,6 +96,10 @@ collision_mask = 0
 size = Vector3(20, 0.2, 20)
 material = SubResource("ShaderMaterial_fxffg")
 
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="Location/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.179938, 0)
+occluder = SubResource("BoxOccluder3D_4ayn3")
+
 [node name="Wall" type="CSGBox3D" parent="Location"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.25725, 1.35921, 2.37952)
 use_collision = true
@@ -104,16 +107,24 @@ collision_mask = 0
 size = Vector3(2, 2, 2)
 material = SubResource("ShaderMaterial_pdt6i")
 
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="Location/Wall"]
+occluder = SubResource("BoxOccluder3D_0uxjs")
+
 [node name="Player" parent="." instance=ExtResource("2_qcusl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22617, 0.0999997, -0.160493)
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.78888, 0.0154436, -0.614353, 0.614547, -0.0198246, 0.788631, 0, -0.999684, -0.0251301, -11.5611, 4.45323, 7.68174)
+light_energy = 0.5
+
+[node name="blockbench_export" parent="." instance=ExtResource("3_rvq1f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9567, 0.518923, 7.61824)
+
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.5161, 2.07618, 0)
-texture = SubResource("ViewportTexture_64lbl")
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -11.2167, 2.67104, 0)
+texture = SubResource("ViewportTexture_0q7s3")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.5161, 2.07618, 0)
-
-[editable path="Player"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.9718, 1.66344, 0)

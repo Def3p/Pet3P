@@ -22,7 +22,7 @@ func Update(delta: float):
 	direction = lerp(direction, to_direction, delta * lerp_speed)
 
 	camera_side = int(Input.get_axis("right", "left"))
-	camera.rotation.z = lerp(camera.rotation.z, deg_to_rad(1.5 * camera_side) , 5 * delta)
+	camera.rotation.z = lerp(camera.rotation.z, deg_to_rad(1.8 * camera_side) , 5 * delta)
 
 	if to_direction:
 		
@@ -34,4 +34,3 @@ func Update(delta: float):
 		shake_animator.stop()
 		state_transition.emit(self, "IdleState")
 		shake_animator.play("idle")
-

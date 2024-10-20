@@ -1,8 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://k6nbwxkmimdd"]
+[gd_scene load_steps=3 format=3 uid="uid://k6nbwxkmimdd"]
 
 [ext_resource type="Script" path="res://script/character/player/weapon_manager/weapon_manager.gd" id="1_nl2dj"]
+[ext_resource type="PackedScene" uid="uid://b2uw2dvd10qel" path="res://scene/player_weapon/pistol.tscn" id="2_d5coi"]
 
-[node name="WeaponManager" type="Node3D"]
+[node name="WeaponManager" type="Node3D" node_paths=PackedStringArray("weapon_list")]
 script = ExtResource("1_nl2dj")
+weapon_list = [NodePath("WeaponNode/Pistol")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
 
 [node name="WeaponNode" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Pistol" parent="WeaponNode" node_paths=PackedStringArray("muzzles") instance=ExtResource("2_d5coi")]
+transform = Transform3D(0.994522, -0.0109262, 0.103956, 0, 0.994522, 0.104528, -0.104528, -0.103956, 0.989074, -0.411347, -0.312675, 0.400436)
+muzzles = [NodePath("Model/Muzzles/Muzzle1"), null]
+access = true
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 1, -10)
+collision_mask = 5
+collide_with_areas = true
